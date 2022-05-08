@@ -1,4 +1,4 @@
-package com.yifeplayte.magicpointerswitcher
+package com.yifeplayte.magicpointerswitcher.activity
 
 import android.hardware.input.InputManager
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.os.Looper
 import android.widget.Toast
 import cn.fkj233.ui.activity.MIUIActivity
 import cn.fkj233.ui.activity.view.TextSummaryV
+import com.yifeplayte.magicpointerswitcher.R
+import com.yifeplayte.magicpointerswitcher.util.ExceptionUtil.getStackTraceInfo
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 class MainActivity : MIUIActivity() {
@@ -15,6 +17,11 @@ class MainActivity : MIUIActivity() {
     init {
         initView {
             registerMain(getString(R.string.app_name), false) {
+                Line()
+                TitleText("这是一个为小米平板5系列提供免root权限切换鼠标样式的工具。")
+                TitleText("此软件只可在小米平板5系列且较新版本的MIUI13上运行。")
+                TitleText("您可以在控制中心里添加原生鼠标切换的快捷方式而不需要进入本软件。")
+                TitleText("此页面将仅供测试除错。")
                 TextSummaryArrow(
                     TextSummaryV(
                         text = "使用原生鼠标指针",
@@ -31,8 +38,10 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     true
                                 )
+                                showToast("尝试使用原生鼠标指针成功")
                             } catch (e: Exception) {
-                                showToast("尝试使用原生鼠标指针失败")
+                                val exceptionString = getStackTraceInfo(e)
+                                showToast("尝试使用原生鼠标指针失败：$exceptionString")
                             }
                         }
                     )
@@ -53,8 +62,33 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     false
                                 )
+                                showToast("尝试使用Magic Pointer成功")
                             } catch (e: Exception) {
-                                showToast("尝试使用Magic Pointer失败")
+                                val exceptionString = getStackTraceInfo(e)
+                                showToast("尝试使用Magic Pointer失败：$exceptionString")
+                            }
+                        }
+                    )
+                )
+                TextSummaryArrow(
+                    TextSummaryV(
+                        text = "获取当前指针状态",
+                        onClickListener = {
+                            try {
+                                val im = HiddenApiBypass.invoke(
+                                    InputManager::class.java,
+                                    null,
+                                    "getInstance"
+                                )
+                                val state = HiddenApiBypass.invoke(
+                                    InputManager::class.java,
+                                    im,
+                                    "getPointerVisibility"
+                                )
+                                showToast("尝试获取当前指针状态成功，当前状态：$state")
+                            } catch (e: Exception) {
+                                val exceptionString = getStackTraceInfo(e)
+                                showToast("尝试获取当前指针状态失败：$exceptionString")
                             }
                         }
                     )
@@ -81,7 +115,11 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     state
                                 )
-                            } catch (e: Exception) {}
+                                showToast("尝试切换指针样式成功")
+                            } catch (e: Exception) {
+                                val exceptionString = getStackTraceInfo(e)
+                                showToast("尝试切换指针样式失败：$exceptionString")
+                            }
                         }
                     )
                 )

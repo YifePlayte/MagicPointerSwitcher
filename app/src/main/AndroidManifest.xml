@@ -11,7 +11,7 @@
         android:theme="@style/Theme.MagicPointerSwitcher">
 
         <service
-            android:name=".SwitcherTileService"
+            android:name=".service.SwitcherTileService"
             android:icon="@drawable/ic_tile"
             android:label="原生鼠标"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -22,7 +22,7 @@
         </service>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

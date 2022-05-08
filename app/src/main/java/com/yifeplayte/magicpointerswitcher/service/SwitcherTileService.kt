@@ -1,4 +1,4 @@
-package com.yifeplayte.magicpointerswitcher
+package com.yifeplayte.magicpointerswitcher.service
 
 import android.content.Intent
 import android.hardware.input.InputManager
@@ -49,7 +49,10 @@ class SwitcherTileService : TileService() {
             )
             qsTile.state = if (state) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             qsTile.updateTile()
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            qsTile.state = Tile.STATE_UNAVAILABLE
+            qsTile.updateTile()
+        }
     }
 
     override fun onStartListening() {
@@ -67,7 +70,11 @@ class SwitcherTileService : TileService() {
             )
             qsTile.state = if (state == true) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             qsTile.updateTile()
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            qsTile.state = Tile.STATE_UNAVAILABLE
+            qsTile.label = "不可用"
+            qsTile.updateTile()
+        }
     }
 
 }
