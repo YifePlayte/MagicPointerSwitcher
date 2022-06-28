@@ -1,30 +1,86 @@
 package com.yifeplayte.magicpointerswitcher.activity
 
+import android.annotation.SuppressLint
 import android.hardware.input.InputManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import cn.fkj233.ui.activity.MIUIActivity
+import cn.fkj233.ui.activity.view.SwitchV
 import cn.fkj233.ui.activity.view.TextSummaryV
+import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.magicpointerswitcher.R
 import com.yifeplayte.magicpointerswitcher.util.ExceptionUtil.getStackTraceInfo
+import com.yifeplayte.magicpointerswitcher.util.Utils
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 class MainActivity : MIUIActivity() {
     private val handler by lazy { Handler(Looper.getMainLooper()) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            setSP(getPreferences(0))
+        } else {
+            checkLSPosed()
+        }
+        super.onCreate(savedInstanceState)
+    }
+
+    @SuppressLint("WorldReadableFiles")
+    private fun checkLSPosed() {
+        try {
+            setSP(getSharedPreferences("config", MODE_WORLD_READABLE))
+        } catch (exception: SecurityException) {
+            setSP(getPreferences(0))
+            MIUIDialog(this) {
+                setTitle(R.string.warning)
+                setMessage(R.string.not_support)
+                setCancelable(false)
+                setRButton(R.string.done) {
+                    dismiss()
+                }
+            }.show()
+        }
+    }
+
     init {
         initView {
             registerMain(getString(R.string.app_name), false) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+                    TextSummaryWithSwitch(
+                        TextSummaryV(
+                            textId = R.string.no_magic_pointer,
+                            tipsId = R.string.no_magic_pointer_tips
+                        ),
+                        SwitchV("no_magic_pointer", true)
+                    )
+                } else {
+                    TitleText(getString(R.string.a11_tips))
+                }
                 Line()
-                TitleText("这是一个为小米平板5系列提供免root权限切换鼠标样式的工具。")
-                TitleText("此软件只可在小米平板5系列且较新版本的MIUI13上运行。")
-                TitleText("您可以在控制中心里添加原生鼠标切换的快捷方式而不需要进入本软件。")
-                TitleText("此页面将仅供测试除错。")
+                TitleText(getString(R.string.reboot))
+                @Suppress("DEPRECATION")
+                TextSummaryArrow(
+                    TextSummaryV(getString(R.string.reboot_system)) {
+                        MIUIDialog(this@MainActivity) {
+                            setTitle(R.string.warning)
+                            setMessage(R.string.reboot_tips)
+                            setLButton(R.string.cancel) {
+                                dismiss()
+                            }
+                            setRButton(R.string.done) {
+                                Utils.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
+                            }
+                        }.show()
+                    }
+                )
+                Line()
+                TitleText(getString(R.string.test))
                 TextSummaryArrow(
                     TextSummaryV(
-                        text = "使用原生鼠标指针",
+                        text = getString(R.string.switch_to_aosp_pointer),
                         onClickListener = {
                             try {
                                 val im = HiddenApiBypass.invoke(
@@ -38,17 +94,20 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     true
                                 )
-                                showToast("尝试使用原生鼠标指针成功")
+                                showToast(getString(R.string.switch_to_aosp_pointer_success))
                             } catch (e: Exception) {
                                 val exceptionString = getStackTraceInfo(e)
-                                showToast("尝试使用原生鼠标指针失败：$exceptionString")
+                                showToast(buildString {
+                                    append(getString(R.string.switch_to_aosp_pointer_failed))
+                                    append(exceptionString)
+                                })
                             }
                         }
                     )
                 )
                 TextSummaryArrow(
                     TextSummaryV(
-                        text = "使用Magic Pointer",
+                        textId = R.string.switch_to_magic_pointer,
                         onClickListener = {
                             try {
                                 val im = HiddenApiBypass.invoke(
@@ -62,17 +121,20 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     false
                                 )
-                                showToast("尝试使用Magic Pointer成功")
+                                showToast(getString(R.string.switch_to_magic_pointer_success))
                             } catch (e: Exception) {
                                 val exceptionString = getStackTraceInfo(e)
-                                showToast("尝试使用Magic Pointer失败：$exceptionString")
+                                showToast(buildString {
+                                    append(getString(R.string.switch_to_magic_pointer_failed))
+                                    append(exceptionString)
+                                })
                             }
                         }
                     )
                 )
                 TextSummaryArrow(
                     TextSummaryV(
-                        text = "获取当前指针状态",
+                        textId = R.string.get_current_pointer_state,
                         onClickListener = {
                             try {
                                 val im = HiddenApiBypass.invoke(
@@ -85,17 +147,23 @@ class MainActivity : MIUIActivity() {
                                     im,
                                     "getPointerVisibility"
                                 )
-                                showToast("尝试获取当前指针状态成功，当前状态：$state")
+                                showToast(buildString {
+                                    append(getString(R.string.get_current_pointer_state_success))
+                                    append(state)
+                                })
                             } catch (e: Exception) {
                                 val exceptionString = getStackTraceInfo(e)
-                                showToast("尝试获取当前指针状态失败：$exceptionString")
+                                showToast(buildString {
+                                    append(getString(R.string.get_current_pointer_state_failed))
+                                    append(exceptionString)
+                                })
                             }
                         }
                     )
                 )
                 TextSummaryArrow(
                     TextSummaryV(
-                        text = "切换指针样式",
+                        textId = R.string.switch_pointer_style,
                         onClickListener = {
                             try {
                                 val im = HiddenApiBypass.invoke(
@@ -115,21 +183,19 @@ class MainActivity : MIUIActivity() {
                                     "setPointerVisibility",
                                     state
                                 )
-                                showToast("尝试切换指针样式成功")
+                                showToast(getString(R.string.switch_pointer_style_success))
                             } catch (e: Exception) {
                                 val exceptionString = getStackTraceInfo(e)
-                                showToast("尝试切换指针样式失败：$exceptionString")
+                                showToast(buildString {
+                                    append(getString(R.string.switch_pointer_style_failed))
+                                    append(exceptionString)
+                                })
                             }
                         }
                     )
                 )
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setSP(getPreferences(0))
-        super.onCreate(savedInstanceState)
     }
 
     private fun showToast(string: String) {

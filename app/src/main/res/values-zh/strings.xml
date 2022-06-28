@@ -1,0 +1,29 @@
+<resources>
+    <string name="aosp_pointer">原生鼠标</string>
+    <string name="cancel">取消</string>
+    <string name="done">确定</string>
+    <string name="get_current_pointer_state">获取当前指针状态</string>
+    <string name="get_current_pointer_state_failed">尝试获取当前指针状态失败：</string>
+    <string name="get_current_pointer_state_success">尝试获取当前指针状态成功，当前状态：</string>
+    <string name="no_magic_pointer">关闭Magic Pointer</string>
+    <string name="no_magic_pointer_tips">通过Xposed方式关掉MIUI for Pad的圆形鼠标，恢复为安卓原生鼠标指针。仅在A12的小米平板5系列上测试通过。重启生效。</string>
+    <string name="not_available">不可用</string>
+    <string name="not_support">您似乎正在使用过时的 LSPosed 版本或 LSPosed 未激活，请更新 LSPosed 或者激活后再试。</string>
+    <string name="reboot">重启</string>
+    <string name="reboot_system">重启系统</string>
+    <string name="reboot_tips">确定重启系统？</string>
+    <string name="switch_pointer_style">切换指针样式</string>
+    <string name="switch_pointer_style_failed">尝试切换指针样式失败：</string>
+    <string name="switch_pointer_style_success">尝试切换指针样式成功</string>
+    <string name="switch_to_aosp_pointer">使用原生鼠标指针</string>
+    <string name="switch_to_aosp_pointer_failed">尝试使用原生鼠标指针失败：</string>
+    <string name="switch_to_aosp_pointer_success">尝试使用原生鼠标指针成功</string>
+    <string name="switch_to_magic_pointer">使用Magic Pointer</string>
+    <string name="switch_to_magic_pointer_failed">尝试使用Magic Pointer失败：</string>
+    <string name="switch_to_magic_pointer_success">尝试使用Magic Pointer成功</string>
+    <string name="test">测试</string>
+    <string name="tips">提示</string>
+    <string name="warning">警告</string>
+    <string name="xposed_description">给Magic Pointer一个开关</string>
+    <string name="a11_tips">Android 11用户可以在控制中心添加快捷开关切换鼠标样式</string>
+</resources>

@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">MagicPointerSwitcher</string>
+    <string name="aosp_pointer">AOSP pointer</string>
+    <string name="app_name" translatable="false">MagicPointerSwitcher</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">OK</string>
+    <string name="get_current_pointer_state">Get current pointer state</string>
+    <string name="get_current_pointer_state_failed">"Get current pointer state failed: "</string>
+    <string name="get_current_pointer_state_success">"Get current pointer state success, state: "</string>
+    <string name="no_magic_pointer">No Magic Pointer</string>
+    <string name="no_magic_pointer_tips">Turn the round MIUI pointer to AOSP pointer using Xposed method. Only tested on Mi Pad 5 series with Android 12. Reboot to take effect.</string>
+    <string name="not_available">Not available</string>
+    <string name="not_support">You seem to be using an outdated version of LSPosed or LSPosed is not active, please update LSPosed or activate it and try again.</string>
+    <string name="reboot">Reboot</string>
+    <string name="reboot_system">Reboot system</string>
+    <string name="reboot_tips">Are you sure to reboot?</string>
+    <string name="switch_pointer_style">Switch pointer style</string>
+    <string name="switch_pointer_style_failed">"Switch pointer style failed: "</string>
+    <string name="switch_pointer_style_success">Switch pointer state success</string>
+    <string name="switch_to_aosp_pointer">Switch to AOSP pointer</string>
+    <string name="switch_to_aosp_pointer_failed">"Switch to AOSP pointer failed: "</string>
+    <string name="switch_to_aosp_pointer_success">Switch to AOSP pointer success</string>
+    <string name="switch_to_magic_pointer">Switch to Magic Pointer</string>
+    <string name="switch_to_magic_pointer_failed">"Switch to magic pointer failed: "</string>
+    <string name="switch_to_magic_pointer_success">Switch to magic pointer success</string>
+    <string name="test">Test</string>
+    <string name="tips">Tips</string>
+    <string name="warning">Warning</string>
+    <string name="xposed_description">Provide a switch to MIUI Magic Pointer</string>
+    <string name="a11_tips">Android 11 users can add a tile in control center to switch pointer style.</string>
 </resources>

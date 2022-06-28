@@ -5,6 +5,7 @@ import android.hardware.input.InputManager
 import android.os.IBinder
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import com.yifeplayte.magicpointerswitcher.R
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 class SwitcherTileService : TileService() {
@@ -72,7 +73,7 @@ class SwitcherTileService : TileService() {
             qsTile.updateTile()
         } catch (e: Exception) {
             qsTile.state = Tile.STATE_UNAVAILABLE
-            qsTile.label = "不可用"
+            qsTile.label = getString(R.string.not_available)
             qsTile.updateTile()
         }
     }

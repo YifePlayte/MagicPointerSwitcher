@@ -9,11 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MagicPointerSwitcher">
+        <meta-data
+            android:name="xposeddescription"
+            android:value="@string/xposed_description" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="93" />
+
 
         <service
             android:name=".service.SwitcherTileService"
             android:icon="@drawable/ic_tile"
-            android:label="原生鼠标"
+            android:label="@string/aosp_pointer"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
             <intent-filter>
